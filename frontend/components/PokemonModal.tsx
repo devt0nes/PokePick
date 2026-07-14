@@ -80,7 +80,7 @@ const typeColors: { [key: string]: string } = {
   rock: 'bg-yellow-800',
   ghost: 'bg-purple-700',
   dragon: 'bg-indigo-700',
-  dark: 'bg-gray-800',
+  dark: 'bg-zinc-950',
   steel: 'bg-gray-500',
   fairy: 'bg-pink-300',
 };
@@ -363,7 +363,7 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
                   <button
                     key={move.move.name}
                     onClick={() => handleMoveToggle(moveName)}
-                    className={`cursor-pointer px-2 py-1 rounded text-xs capitalize border ${selected ? 'bg-blue-500 text-white border-blue-600' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600'} ${selectedMoves.length === 4 && !selected ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`cursor-pointer px-2 py-1 rounded text-xs capitalize border ${selected ? 'bg-sky-500 text-white border-blue-600' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600'} ${selectedMoves.length === 4 && !selected ? 'opacity-50 pointer-events-none' : ''}`}
                     disabled={adding}
                   >
                     {moveName}
@@ -379,7 +379,7 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
           <button
             onClick={handleAddToTeam}
             disabled={adding || selectedMoves.length !== 4}
-            className="cursor-pointer mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer mt-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {adding ? 'Adding...' : 'Add to Team'}
           </button>

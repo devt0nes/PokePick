@@ -3,11 +3,16 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 // const bodyParser = require('body-parser');
+
+const connectDB = require("./config/db");
+
 const teamRoutes = require('./routes/teams');
 const contactRoutes = require('./routes/contact');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+connectDB();
 
 app.use(cors());
 // app.use(bodyParser.json());

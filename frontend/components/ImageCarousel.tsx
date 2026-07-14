@@ -44,7 +44,7 @@ const ImageCarousel: React.FC = () => {
 
       <button
         onClick={prevImage}
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-black/60 text-white p-2 rounded-full hover:bg-black transition z-10"
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-black/60 text-white p-2 rounded-full hover:bg-black transition z-10 cursor-pointer"
       >
         &#10094;
       </button>
@@ -60,7 +60,7 @@ const ImageCarousel: React.FC = () => {
 
       <button
         onClick={nextImage}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-black/60 text-white p-2 rounded-full hover:bg-black transition z-10"
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-black/60 text-white p-2 rounded-full hover:bg-black transition z-10 cursor-pointer"
       >
         &#10095;
       </button>

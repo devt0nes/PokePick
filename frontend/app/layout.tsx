@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Pixelify_Sans, Jersey_15 } from "next/font/google";
 import './globals.css';
 import { ThemeProvider } from "../components/ThemeProvider";
+import BackgroundWrapper from "@/components/BackgroundWrapper";
+import RandomFavicon from "@/components/RandomFavicon";
 import TeamSidebar from '../components/TeamSidebar';
 import Navigation from "../components/Navigation"
 import Footer from '../components/Footer';
@@ -39,21 +41,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${geistMono.variable} ${pixelify.variable} ${jersey.variable}`}
       >
       <body className="bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          storageKey={undefined}
-        >
-          <div className="flex flex-col min-h-screen overflow-x-hidden">
-            <Navigation />
-            <div className="flex flex-1 overflow-x-hidden">
-              <main className="flex-1 overflow-x-hidden">{children}</main>
-              <TeamSidebar />
+        <BackgroundWrapper>
+        <RandomFavicon />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            storageKey={undefined}
+          >
+            <div className="flex flex-col min-h-screen overflow-x-hidden">
+              <Navigation />
+              <div className="flex flex-1 overflow-x-hidden">
+                <main className="flex-1 overflow-x-hidden">{children}</main>
+                <TeamSidebar />
+              </div>
             </div>
-          </div>
-          <Footer />
-        </ThemeProvider>
+            <Footer />
+          </ThemeProvider>
+        </BackgroundWrapper>
       </body>
     </html>
   );

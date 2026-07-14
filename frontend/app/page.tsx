@@ -1,13 +1,13 @@
 import Image from "next/image";
-import ImageCarousel from '../components/ImageCarousel';
-import TypewriterComponent from "../components/TypewriterComponent";
+import ImageCarousel from '@/components/ImageCarousel';
+import TypewriterComponent from "@/components/TypewriterComponent";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className='text-center'>
       <div>
-        <h1 className='mt-25 text-5xl font-pixelify-sans font-bold text-[rgb(6,0,78)] inline-block'>
+        <h1 className='mt-25 text-5xl font-pixelify-sans font-bold text-[#1a1a1a] dark:text-white drop-shadow-lg inline-block'>
           Welcome to
         </h1>
         <div className='animate-float flex justify-center items-center px-4'>
@@ -32,26 +32,26 @@ export default function Home() {
               </h1>
 
               <Link href="/pokedex" passHref>
-                <button className="text-white font-jersey-15 bg-[#6abc3a] px-10 py-4 mb-2 mr-10 text-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038]">
+                <button className="text-white font-jersey-15 bg-[#6abc3a] px-8 py-3 mb-2 mr-10 text-2xl border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038] cursor-pointer">
                   Pokédex
                 </button>
               </Link>
 
               <Link href="/contact" passHref>
-                <button className="text-white font-jersey-15 bg-[#d83434] px-10 py-4 mb-2 ml-10 text-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038]">
+                <button className="text-white font-jersey-15 bg-[#d83434] px-8 py-3 mb-2 ml-10 text-2xl border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038] cursor-pointer">
                   Contact
                 </button>
                 <br /><br />
               </Link>
 
               <Link href="/admin" passHref>
-                <button className="text-white font-jersey-15 bg-[#38667f] px-10 py-4 mb-2 mr-10 text-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038]">
+                <button className="text-white font-jersey-15 bg-[#38667f] px-8 py-3 mb-2 mr-10 text-2xl border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038] cursor-pointer">
                   Admin
                 </button>
               </Link>
 
               <a
-                className="text-white font-jersey-15 bg-[#9f7db1] px-10 py-4 mb-2 ml-10 text-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038]"
+                className="text-white font-jersey-15 bg-[#9f7db1] px-9 py-4 mb-2 ml-10 text-2xl border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[5px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038]"
                 href='https://play.pokemonshowdown.com/'
                 target="_blank"
                 rel="noopener noreferrer"

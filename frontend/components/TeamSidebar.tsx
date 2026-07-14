@@ -95,9 +95,9 @@ export default function TeamSidebar() {
   }, []);
 
   return (
-    <aside className={`fixed right-0 top-18 bottom-4 z-40 bg-sky-50 /* dark:bg-[rgb(6,0,78)] */ border-y-4 border-l-4 border-2 border-[rgb(6,0,78)] shadow-[inset_2px_2px_0px_rgba(255,255,255,0.35),inset_-2px_-2px_0px_rgba(0,0,0,0.35),4px_4px_0px_rgba(0,0,0,0.25)] rounded-l-2xl transition-all duration-300 ${collapsed ? 'w-14' : 'w-72'} flex flex-col shadow-2xl overflow-hidden`}>
+    <aside className={`fixed right-0 top-18 bottom-4 z-40 bg-sky-50 bg-[url('/pokemongrasssprite.jpg')] bg-cover bg-center /* dark:bg-[rgb(6,0,78)] */ border-y-4 border-l-4 border-2 border-[rgb(6,0,78)] shadow-[inset_2px_2px_0px_rgba(255,255,255,0.35),inset_-2px_-2px_0px_rgba(0,0,0,0.35),4px_4px_0px_rgba(0,0,0,0.25)] rounded-l-2xl transition-all duration-300 ${collapsed ? 'w-14' : 'w-72'} flex flex-col shadow-2xl overflow-hidden`}>
       <div className="flex items-center justify-between p-4 border-b-2 border-sky-200/60 bg-sky-100/50">
-        <span className={`font-pixelify-sans font-bold text-xl uppercase tracking-wider text-[rgb(6,0,78)] transition-opacity duration-300 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>My Team</span>
+        <span className={`font-pixelify-sans font-bold text-xl uppercase tracking-wider text-[rgb(6,0,78)] transition-opacity duration-300 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'} /*whitespace-nowrap overflow-hidden transition-all duration-300 ${collapsed ? 'opacity-0 max-w-0' : 'opacity-100 max-w-40'}*/`}>My Team</span>
         <button
           onClick={() => setCollapsed((c) => !c)}
           className={`p-1 rounded-lg hover:bg-sky-200/50 text-[rgb(6,0,78)] focus:outline-none transition-all duration-300 ${collapsed ? 'absolute left-1/2 transform -translate-x-1/2' : 'ml-2'}`}

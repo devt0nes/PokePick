@@ -40,7 +40,7 @@ const typeColors: { [key: string]: string } = {
   rock: 'bg-yellow-800',
   ghost: 'bg-purple-700',
   dragon: 'bg-indigo-700',
-  dark: 'bg-gray-800',
+  dark: 'bg-zinc-950',
   steel: 'bg-gray-500',
   fairy: 'bg-pink-300',
 };
@@ -49,7 +49,7 @@ export default function PokemonCard({ id, name, image, types, stats, onClick }: 
   const safeImage = image || '/placeholder.png';
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:scale-110 transition-transform duration-200 group"
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:scale-110 transition-transform duration-200 group flex flex-col h-full"
       onClick={onClick}
       style={onClick ? { cursor: 'pointer' } : {}}
     >
@@ -69,22 +69,23 @@ export default function PokemonCard({ id, name, image, types, stats, onClick }: 
       </div>
 
       {/* Pokemon Info */}
-      <div className="p-4">
-        {/* Name */}
-        <h3 className="text-lg font-bold text-gray-800 dark:text-white capitalize mb-2">
-          {name}
-        </h3>
+      <div className="p-4 flex flex-col flex-1">
+        {/* Name + Types */}
+        <div className="flex-1 flex flex-col justify-center">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-white capitalize mb-2 text-center">
+            {name}
+          </h3>
 
-        {/* Types */}
-        <div className="flex gap-2 mb-4">
-          {types.map((type, index) => (
-            <span
-              key={index}
-              className={`${typeColors[type.type.name] || 'bg-gray-400'} text-white text-xs px-2 py-1 rounded-full font-medium uppercase`}
-            >
-              {type.type.name.toUpperCase()}
-            </span>
-          ))}
+          <div className="flex justify-center gap-2 mb-4">
+            {types.map((type, index) => (
+              <span
+                key={index}
+                className={`${typeColors[type.type.name] || 'bg-gray-400'} text-white text-xs px-2 py-1 rounded-full font-medium uppercase`}
+              >
+                {type.type.name.toUpperCase()}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Stats */}

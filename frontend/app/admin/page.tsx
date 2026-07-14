@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 
 interface ContactMessage {
-  id: number;
+  _id: number;
   name: string;
   email: string;
   subject: string;
   message: string;
-  timestamp: string;
+  createdAt: string;
+  updatedAt: string;
   status: 'read' | 'unread';
 }
 
@@ -74,8 +75,8 @@ export default function AdminPage() {
     fetchMessages();
   }, []);
 
-  const formatDate = (timestamp: string) => {
-    return new Date(timestamp).toLocaleString();
+  const formatDate = (createdAt: string) => {
+    return new Date(createdAt).toLocaleString();
   };
 
   if (loading) {
@@ -92,7 +93,7 @@ export default function AdminPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col items-center justify-center">
+      <div className="min-h-screen /*bg-gray-50 dark:bg-gray-900*/ py-8 flex flex-col items-center justify-center">
         <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-pixelify-sans font-bold text-[rgb(216,52,52)] mb-4 drop-shadow-lg">Error</h2>
@@ -110,26 +111,26 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col items-center justify-center">
+    <div className="min-h-screen /*bg-gray-50 dark:bg-gray-900*/ py-8 flex flex-col items-center justify-center">
       <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 text-center">
           <h1 className="text-5xl font-pixelify-sans font-bold text-[#1a1a1a] dark:text-white mb-2 drop-shadow-lg">
             Contact Messages
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 font-pixelify-sans">
+          <p className="text-gray-700 dark:text-gray-200 font-pixelify-sans">
             Manage contact form submissions and feedback
           </p>
         </div>
 
         {messages.length === 0 ? (
-          <div className="bg-white/80 dark:bg-gray-900/80 rounded-3xl shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff1f,inset_0px_-5px_#00000030] p-8 border-4 border-[rgb(6,0,78)] text-center">
+          <div className="bg-white/80 dark:bg-gray-900/80 rounded-3xl custom-border-style text-center">
             <p className="text-gray-500 dark:text-gray-400 font-pixelify-sans">No messages yet.</p>
           </div>
         ) : (
           <div className="space-y-6">
-            {messages.map((message) => (
+            {messages.map((message) => (  
               <div
-                key={message.id}
+                key={message._id}
                 className={`bg-white/80 dark:bg-gray-900/80 rounded-3xl shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff1f,inset_0px_-5px_#00000030] p-6 border-4 ${
                   message.status === 'unread' 
                     ? 'border-blue-500 bg-blue-50/80 dark:bg-blue-900/40' 
@@ -155,20 +156,20 @@ export default function AdminPage() {
                       Subject: <span className="font-medium">{message.subject}</span>
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 font-pixelify-sans">
-                      {formatDate(message.timestamp)}
+                      {formatDate(message.createdAt)}
                     </p>
                   </div>
                   <div className="flex space-x-4">
                     {message.status === 'unread' && (
                       <button
-                        onClick={() => markAsRead(message.id)}
+                        onClick={() => markAsRead(message._id)}
                         className="px-4 py-2 text-sm text-white font-jersey-15 bg-[#6abc3a] rounded-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[3px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038] transition-all"
                       >
                         Mark Read
                       </button>
                     )}
                     <button
-                      onClick={() => deleteMessage(message.id)}
+                      onClick={() => deleteMessage(message._id)}
                       className="px-4 py-2 text-sm text-white font-jersey-15 bg-[#d83434] rounded-lg border-0 shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,0px_10px_#00000038,5px_5px_#00000038,-5px_5px_#00000038,inset_0px_5px_#ffffff36] active:translate-y-[3px] active:shadow-[0px_5px_black,0px_-5px_black,5px_0px_black,-5px_0px_black,inset_0px_5px_#00000038] transition-all"
                     >
                       Delete

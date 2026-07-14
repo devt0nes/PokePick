@@ -534,38 +534,60 @@ export default function PokemonList() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-sky-100 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filter & Sort Controls */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
           {/* Type Filter */}
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">All Types</option>
-            {typeOptions.map((type) => (
-              <option key={type} value={type} className="capitalize">
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </option>
-            ))}
-          </select>
-          {/* Stat Sort */}
-          <div className="flex gap-2 items-center">
+          <div className="relative w-fit">
             <select
-              value={sortStat}
-              onChange={(e) => setSortStat(e.target.value)}
-              className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="cursor-pointer appearance-none pl-3 pr-10 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Sort by Stat</option>
-              {STAT_OPTIONS.map((stat) => (
-                <option key={stat.key} value={stat.key}>{stat.label}</option>
+              <option value="">All Types</option>
+              {typeOptions.map((type) => (
+                <option key={type} value={type} className="capitalize">
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </option>
               ))}
             </select>
+            <svg
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          {/* Stat Sort */}
+          <div className="flex gap-2 items-center">
+            <div className="relative w-fit">
+              <select
+                value={sortStat}
+                onChange={(e) => setSortStat(e.target.value)}
+                className="cursor-pointer appearance-none pl-3 pr-10 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Sort by Stat</option>
+                {STAT_OPTIONS.map((stat) => (
+                  <option key={stat.key} value={stat.key}>{stat.label}</option>
+                ))}
+              </select>
+              <svg
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
             <button
               onClick={() => setSortOrder((o) => (o === 'asc' ? 'desc' : 'asc'))}
-              className="px-2 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="cursor-pointer px-2 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               title={sortOrder === 'asc' ? 'Ascending' : 'Descending'}
             >
               {sortOrder === 'asc' ? '↑' : '↓'}
@@ -619,7 +641,7 @@ export default function PokemonList() {
           <div className="text-center text-red-500 mb-4">{searchError}</div>
         )}
         {/* Pokemon Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-6 mb-8">
           {displayedPokemon.map((poke, idx) => (
             <PokemonCard
               key={poke.id ? poke.id : `${poke.name}-${idx}`}
