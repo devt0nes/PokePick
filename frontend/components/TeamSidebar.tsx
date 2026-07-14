@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface TeamPokemon {
   id: number;
@@ -27,6 +28,7 @@ export default function TeamSidebar() {
   const [team, setTeam] = useState<TeamPokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   // Fetch team from backend
   const fetchTeam = async () => {
@@ -128,12 +130,14 @@ export default function TeamSidebar() {
               <div key={pokemon.id} className="bg-white/80 rounded-xl p-3 border-2 border-sky-200/60 hover:border-sky-300 transition-all shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-2">
-                    <img
-                      src={pokemon.image || '/placeholder.png'}
+                    <Image
+                      src={imageErrors[pokemon.id] ? '/placeholder.png' : (pokemon.image || '/placeholder.png')}
                       alt={pokemon.name}
-                      className="w-8 h-8 rounded"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/placeholder.png';
+                      width={32}
+                      height={32}
+                      className="rounded"
+                      onError={() => {
+                        setImageErrors((prev) => ({ ...prev, [pokemon.id]: true }));
                       }}
                     />
                     <span className="font-pixelify-sans font-bold text-base capitalize text-gray-800">

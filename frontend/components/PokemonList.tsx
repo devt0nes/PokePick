@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import PokemonCard from './PokemonCard';
-import PokemonModal from './PokemonModal';
+import PokemonModal, { PokemonModalDetails } from './PokemonModal';
 
 interface Pokemon {
   id: number;
@@ -55,7 +55,7 @@ export default function PokemonList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const pokemonPerPage = 20;
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [selectedPokemon, setSelectedPokemon] = useState<PokemonModalDetails | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [allPokemonList, setAllPokemonList] = useState<{ name: string; url: string }[]>([]);
@@ -88,7 +88,7 @@ export default function PokemonList() {
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/type')
       .then((res) => res.json())
-      .then((data) => setTypeOptions(data.results.map((t: any) => t.name)));
+      .then((data) => setTypeOptions(data.results.map((t: { name: string }) => t.name)));
   }, []);
 
   // Debounced search effect
@@ -241,13 +241,13 @@ export default function PokemonList() {
     setGlobalSortLoading(true);
     // Fetch all details if not already
     const fetchAllDetails = async () => {
-      const allList = allPokemonList.length ? allPokemonList : (await fetch('https://pokeapi.co/api/v2/pokemon?limit=1300').then(r => r.json()).then(d => d.results));
+      const allList: { name: string; url: string }[] = allPokemonList.length ? allPokemonList : (await fetch('https://pokeapi.co/api/v2/pokemon?limit=1300').then(r => r.json()).then(d => d.results));
       const batchSize = 40;
       let allDetails: Pokemon[] = [];
       for (let i = 0; i < allList.length; i += batchSize) {
         const batch = allList.slice(i, i + batchSize);
         const batchDetails = await Promise.all(
-          batch.map(async (p) => {
+          batch.map(async (p: { name: string; url: string }) => {
             const res = await fetch(p.url);
             if (!res.ok) return null;
             const detailData = await res.json();
@@ -297,13 +297,13 @@ export default function PokemonList() {
     setGlobalTypeLoading(true);
     // Fetch all details and filter by type
     const fetchAllDetails = async () => {
-      const allList = allPokemonList.length ? allPokemonList : (await fetch('https://pokeapi.co/api/v2/pokemon?limit=1300').then(r => r.json()).then(d => d.results));
+      const allList: { name: string; url: string }[] = allPokemonList.length ? allPokemonList : (await fetch('https://pokeapi.co/api/v2/pokemon?limit=1300').then(r => r.json()).then(d => d.results));
       const batchSize = 40;
       let allDetails: Pokemon[] = [];
       for (let i = 0; i < allList.length; i += batchSize) {
         const batch = allList.slice(i, i + batchSize);
         const batchDetails = await Promise.all(
-          batch.map(async (p) => {
+          batch.map(async (p: { name: string; url: string }) => {
             const res = await fetch(p.url);
             if (!res.ok) return null;
             const detailData = await res.json();
@@ -383,9 +383,9 @@ export default function PokemonList() {
   const loadMore = useCallback(async () => {
     if (loading || searchLoading || globalSortLoading || globalTypeLoading || !hasMore) return;
     
-    let isSearch = search && search.length >= 2;
-    let isGlobalSort = sortStat && globalSortedPokemon && !isSearch;
-    let isGlobalTypeFilter = selectedType && globalTypeFilteredPokemon && !isSearch && !sortStat;
+    const isSearch = search && search.length >= 2;
+    const isGlobalSort = sortStat && globalSortedPokemon && !isSearch;
+    const isGlobalTypeFilter = selectedType && globalTypeFilteredPokemon && !isSearch && !sortStat;
     
     if (isSearch) {
       // Search: get all matches, then slice

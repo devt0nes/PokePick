@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 
-interface Pokemon {
+export interface PokemonModalDetails {
   id: number;
   name: string;
   height: number;
@@ -42,7 +42,7 @@ interface Pokemon {
 }
 
 interface PokemonModalProps {
-  pokemon: Pokemon | null;
+  pokemon: PokemonModalDetails | null;
   onClose: () => void;
 }
 
@@ -91,23 +91,25 @@ const MAX_DISPLAYED_MOVES = 24;
 const generationCache = new Map<string, string>();
 
 export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
-  if (!pokemon) return null;
-
   // State for region and generation
   const [generation, setGeneration] = useState<string | null>(null);
 
   // Fetch region and generation info
   useEffect(() => {
-    if (!pokemon) return;
+    if (!pokemon) {
+      setGeneration(null);
+      return;
+    }
+    const currentPokemon = pokemon;
 
     const controller = new AbortController();
     async function fetchRegionAndGen() {
       try {
-        if (generationCache.has(pokemon.species.url)) {
-          setGeneration(generationCache.get(pokemon.species.url)!);
+        if (generationCache.has(currentPokemon.species.url)) {
+          setGeneration(generationCache.get(currentPokemon.species.url)!);
           return;
         }
-        const speciesRes = await fetch(pokemon.species.url, {
+        const speciesRes = await fetch(currentPokemon.species.url, {
           signal: controller.signal,
         });
 
@@ -124,7 +126,7 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
                 .toUpperCase()
             : "Unknown";
 
-        generationCache.set(pokemon.species.url, generation);
+        generationCache.set(currentPokemon.species.url, generation);
 
         setGeneration(generation);
       } catch (err) {
@@ -143,29 +145,28 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
 
   // Only show front default and shiny sprites
   const spriteList = useMemo(
-    () =>
-      [
+    () => {
+      if (!pokemon) return [];
+      return [
         { label: 'Front Default', url: pokemon.sprites.front_default },
         { label: 'Front Shiny', url: pokemon.sprites.front_shiny },
       ].filter(
         (s): s is { label: string; url: string } => s.url !== null
-      ),
+      );
+    },
     [pokemon]
   );
 
   // State for selected sprite
-  const [selectedSprite, setSelectedSprite] = useState(spriteList[0]);
+  const [selectedSprite, setSelectedSprite] = useState<{ label: string; url: string } | undefined>(undefined);
+
   useEffect(() => {
-    setSelectedSprite(spriteList[0]);
-  }, [pokemon]);
-
-  const safeSprite = (url: string | null | undefined) => url || '/placeholder.png';
-
-  // Extract all stats
-  const stats: { [key: string]: number } = {};
-  pokemon.stats.forEach((s) => {
-    stats[s.stat.name] = s.base_stat;
-  });
+    if (spriteList && spriteList.length > 0) {
+      setSelectedSprite(spriteList[0]);
+    } else {
+      setSelectedSprite(undefined);
+    }
+  }, [spriteList]);
 
   const [selectedMoves, setSelectedMoves] = useState<string[]>([]);
   const [adding, setAdding] = useState(false);
@@ -182,6 +183,22 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
       window.removeEventListener("keydown", handleEscape);
     };
   }, [onClose]);
+
+  // Reset selected moves and error states when pokemon changes
+  useEffect(() => {
+    setSelectedMoves([]);
+    setError(null);
+  }, [pokemon]);
+
+  if (!pokemon) return null;
+
+  const safeSprite = (url: string | null | undefined) => url || '/placeholder.png';
+
+  // Extract all stats
+  const stats: { [key: string]: number } = {};
+  pokemon.stats.forEach((s) => {
+    stats[s.stat.name] = s.base_stat;
+  });
 
   const handleMoveToggle = (move: string) => {
     setError(null);
@@ -278,19 +295,19 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
         {/* Left: Sprite and thumbnails */}
         <div className="flex flex-col items-center md:w-1/3 w-full">
           <Image
-            src={safeSprite(selectedSprite.url)}
+            src={safeSprite(selectedSprite?.url)}
             alt={pokemon.name + ' sprite'}
             width={220}
             height={220}
             className="bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-700"
           />
-          <span className="text-xs text-gray-700 dark:text-gray-300 mt-1 mb-2">{selectedSprite.label}</span>
+          <span className="text-xs text-gray-700 dark:text-gray-300 mt-1 mb-2">{selectedSprite?.label}</span>
           <div className="flex flex-wrap gap-4 justify-center w-full">
             {spriteList.map((sprite) => (
               <button
                 key={sprite.label}
                 onClick={() => setSelectedSprite(sprite)}
-                className={`flex flex-col items-center w-16 focus:outline-none ${selectedSprite.url === sprite.url ? 'ring-2 ring-blue-500' : ''}`}
+                className={`flex flex-col items-center w-16 focus:outline-none ${selectedSprite?.url === sprite.url ? 'ring-2 ring-blue-500' : ''}`}
                 tabIndex={0}
                 aria-label={sprite.label}
               >

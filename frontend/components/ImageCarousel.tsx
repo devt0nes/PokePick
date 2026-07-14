@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 const images: string[] = [
   '/typeghost.png',
@@ -49,10 +50,11 @@ const ImageCarousel: React.FC = () => {
         &#10094;
       </button>
 
-      <img
+      <Image
         src={images[currentIndex]}
         alt={`Image ${currentIndex}`}
-        className="max-h-full max-w-full object-contain"
+        fill
+        className="object-contain"
       />
       <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-black text-xl font-pixelify-sans font-semibold bg-white/50 px-4 py-2 rounded-md">
         {labels[currentIndex]}

@@ -79,7 +79,7 @@ export default function ContactPage() {
         }
       }
 
-      const result = await response.json();
+      await response.json();
 
       setSubmitStatus('success');
       setFormData(INITIAL_FORM);
@@ -110,7 +110,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 font-pixelify-sans">
-            Have questions about PokéPick? We'd love to hear from you!
+            {"Have questions about PokéPick? We'd love to hear from you!"}
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function ContactPage() {
                 aria-live="polite"
                 className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 text-green-700 dark:text-green-300 rounded-lg"
               >
-                Thank you for your message! We'll get back to you soon.
+                {"Thank you for your message! We'll get back to you soon."}
               </div>
             )}
 
@@ -296,7 +296,7 @@ export default function ContactPage() {
                 PokéPick is your ultimate Pokémon team builder and browser. Discover, collect, and manage your perfect Pokémon team with our comprehensive database and intuitive tools.
               </p>
               <p className="text-gray-600 dark:text-gray-400">
-                Whether you're a competitive battler or a casual collector, we're here to help you build the team of your dreams.
+                {"Whether you're a competitive battler or a casual collector, we're here to help you build the team of your dreams."}
               </p>
             </div>
           </div>
