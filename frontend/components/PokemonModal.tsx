@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
+import { getClientId } from "@/lib/clientId";
 
 export interface PokemonModalDetails {
   id: number;
@@ -240,7 +241,10 @@ export default function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
       console.log('Sending request to backend...');
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/team/add`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          "x-client-id": getClientId(),
+        },
         body: JSON.stringify({ pokemon: pokemonWithMoves }),
       });
 

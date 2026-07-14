@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { getClientId } from "@/lib/clientId";
 
 interface TeamPokemon {
   id: number;
@@ -34,7 +35,14 @@ export default function TeamSidebar() {
   const fetchTeam = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/team`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/team`,
+        {
+          headers: {
+            "x-client-id": getClientId(),
+          },
+        }
+      );
       if (!response.ok) throw new Error('Failed to fetch team');
       const data = await response.json();
       setTeam(data.team || []);
@@ -48,9 +56,12 @@ export default function TeamSidebar() {
   // Remove Pokémon from team
   const removeFromTeam = async (id: number) => {
     try {
-      const response = await fetch('http://localhost:4000/api/team/remove', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/team/remove`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          "x-client-id": getClientId(),
+        },
         body: JSON.stringify({ id }),
       });
       if (!response.ok) throw new Error('Failed to remove Pokémon');
@@ -66,9 +77,12 @@ export default function TeamSidebar() {
   // Clear entire team
   const clearTeam = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/team/clear', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/team/clear`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          "x-client-id": getClientId(),
+        },
       });
       if (!response.ok) throw new Error('Failed to clear team');
       const data = await response.json();

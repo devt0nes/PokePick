@@ -1,17 +1,45 @@
 const express = require('express');
 const router = express.Router();
 
-// In-memory team (single user for now)
-let team = [];
+const teams = {};
 const MAX_TEAM_SIZE = 6;
+
+// Helper: get the current client's team
+function getTeam(req) {
+  const clientId = req.header("x-client-id");
+
+  if (!clientId) {
+    return null;
+  }
+
+  if (!teams[clientId]) {
+    teams[clientId] = [];
+  }
+
+  return teams[clientId];
+}
 
 // Get current team
 router.get('/', (req, res) => {
+  const team = getTeam(req);
+  if (!team) {
+    return res.status(400).json({
+      error: "Missing client id",
+    });
+  }
+
   res.json({ team });
 });
 
 // Add a Pokémon to the team
 router.post('/add', (req, res) => {
+  const team = getTeam(req);
+  if (!team) {
+    return res.status(400).json({
+      error: "Missing client id",
+    });
+  }
+
   const { pokemon } = req.body;
   if (!pokemon || !pokemon.id) {
     return res.status(400).json({ error: 'Missing pokemon data or id' });
@@ -28,18 +56,37 @@ router.post('/add', (req, res) => {
 
 // Remove a Pokémon from the team
 router.post('/remove', (req, res) => {
+  const team = getTeam(req);
+  if (!team) {
+    return res.status(400).json({
+      error: "Missing client id",
+    });
+  }
+
   const { id } = req.body;
   if (!id) {
     return res.status(400).json({ error: 'Missing pokemon id' });
   }
-  team = team.filter((p) => p.id !== id);
+  const index = team.findIndex((p) => p.id === id);
+  if (index !== -1) {
+    team.splice(index, 1);
+  }
+
   res.json({ team });
 });
 
 // Clear the team
 router.post('/clear', (req, res) => {
-  team = [];
+  const team = getTeam(req);
+  if (!team) {
+    return res.status(400).json({
+      error: "Missing client id",
+    });
+  }
+
+  team.length = 0;
+
   res.json({ team });
 });
 
-module.exports = router; 
+module.exports = router;

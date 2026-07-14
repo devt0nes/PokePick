@@ -50,11 +50,10 @@ const ImageCarousel: React.FC = () => {
         &#10094;
       </button>
 
-      <Image
+      <img
         src={images[currentIndex]}
         alt={`Image ${currentIndex}`}
-        fill
-        className="object-contain"
+        className="max-h-full max-w-full object-contain"
       />
       <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-black text-xl font-pixelify-sans font-semibold bg-white/50 px-4 py-2 rounded-md">
         {labels[currentIndex]}
