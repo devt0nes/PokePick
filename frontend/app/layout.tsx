@@ -26,6 +26,7 @@ const pixelify = Pixelify_Sans({
 const jersey = Jersey_15({
   weight: "400",
   variable: "--font-jersey",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
